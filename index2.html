@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一人暮らしの必須アイテムリスト</title>
+    <style>
+        /* 基本スタイル */
+        body {
+            font-family: 'メイリオ', 'Meiryo', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            font-size: 18px; /* ベースフォントサイズを大きく */
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ヘッダー */
+        header {
+            background-color: #0061AE;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%);
+            background-size: 10px 10px;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1.8em;
+            margin-top: 15px;
+            font-weight: normal;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* カテゴリー */
+        .category {
+            margin: 40px 0;
+            padding: 25px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .category-title {
+            font-size: 2.4em;
+            color: #0061AE;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #0061AE;
+            width: 100%;
+        }
+        
+        /* カード形式のスタイル - 1カラムに変更 */
+        .cards-container {
+            display: grid;
+            grid-template-columns: 1fr; /* 1カラムに変更 */
+            gap: 30px;
+        }
+        
+        .item-card {
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .item-card.urgent {
+            background-color: rgba(255, 235, 235, 0.7);
+            border-left: 8px solid #FF5252;
+        }
+        
+        .item-card.soon {
+            background-color: rgba(255, 248, 225, 0.7);
+            border-left: 8px solid #FFC107;
+        }
+        
+        .item-card.later {
+            background-color: rgba(240, 240, 240, 0.7);
+            border-left: 8px solid #9E9E9E;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            color: #0061AE;
+            font-size: 2.4em; /* 大きくする */
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .timing {
+            font-weight: bold;
+            position: relative;
+            font-size: 1.8em; /* 大きくする */
+            display: block;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #ddd;
+        }
+        
+        .selection-points {
+            font-size: 1.6em; /* 大きくする */
+            line-height: 1.7;
+        }
+        
+        /* ハイライト要素 */
+        .highlight {
+            background: linear-gradient(transparent 70%, #FFD54F 70%);
+            font-weight: bold;
+        }
+        
+        /* フッター */
+        footer {
+            margin-top: 40px;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        
+        /* 購入ガイド */
+        .buying-guide h3 {
+            font-size: 2.2em;
+        }
+        
+        .buying-guide h4 {
+            font-size: 1.8em;
+        }
+        
+        .buying-guide ul li {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        /* レスポンシブ対応 */
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            
+            .item-name {
+                font-size: 2em;
+            }
+            
+            .timing {
+                font-size: 1.5em;
+            }
+            
+            .selection-points {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>一人暮らしの必須アイテムリスト</h1>
+            <p class="subtitle">〜新生活をスムーズに始めるための家具・家電ガイド〜</p>
+        </header>
+        
+        <div class="category">
+            <div class="category-header">
+                <h2 class="category-title">入居日に最低限必要な家具・家電</h2>
+            </div>
+            <div class="cards-container">
+                <div class="item-card urgent">
+                    <span class="item-name">ベッド（または布団）・寝具一式</span>
+                    <span class="timing">入居初日までに準備</span>
+                    <div class="selection-points">シングルサイズのベッド。広々と寝たいなら<span class="highlight">セミダブル</span>もおすすめ。<br>掛け布団・敷布団・枕・シーツなど、ほかの寝具も一式揃えておこう。</div>
+                </div>
+                <div class="item-card urgent">
+                    <span class="item-name">カーテン</span>
+                    <span class="timing">引越し当日夜までに取り付け</span>
+                    <div class="selection-points">窓の寸法に合った遮光カーテン。<br>防犯・遮光効果がある厚手タイプに加え、採光調節用のレースカーテンもあると便利。</div>
+                </div>
+                <div class="item-card urgent">
+                    <span class="item-name">照明器具</span>
+                    <span class="timing">入居時（照明が無い場合）</span>
+                    <div class="selection-points">部屋のソケットに合うLEDシーリングライトなど、十分な明るさのものを選ぼう。<br><span class="highlight">6畳程度の明るさ</span>を目安に。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-header">
+                <h2 class="category-title">家具</h2>
+            </div>
+            <div class="cards-container">
+                <div class="item-card urgent">
+                    <span class="item-name">テーブル／机</span>
+                    <span class="timing">入居時に揃えておきたい</span>
+                    <div class="selection-points">一人用のコンパクトなテーブル。<br>食事やPC作業ができるサイズを。</div>
+                </div>
+                <div class="item-card urgent">
+                    <span class="item-name">椅子</span>
+                    <span class="timing">入居時に揃えておきたい</span>
+                    <div class="selection-points">座り心地の良いもの。<br>作業用なら高さ調整できるワークチェア、食事用ならシンプルなダイニングチェア。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">収納家具（棚・衣類収納など）</span>
+                    <span class="timing">入居後早めに</span>
+                    <div class="selection-points">クローゼットが不足しているなら、ハンガーラックや衣装ケース、収納棚などを用意。<br>部屋のスペースに合わせたサイズやデザインを検討しよう。</div>
+                </div>
+                <div class="item-card later">
+                    <span class="item-name">ソファ（任意）</span>
+                    <span class="timing">必要に応じて<br>（入居後検討）</span>
+                    <div class="selection-points">一人掛けまたはコンパクトな二人掛け。<br>部屋に合うサイズやデザインを選ぶ。</div>
+                </div>
+                <div class="item-card later">
+                    <span class="item-name">ラグ・カーペット（任意）</span>
+                    <span class="timing">必要に応じて<br>（入居後検討）</span>
+                    <div class="selection-points">部屋の大きさに合わせたサイズ。<br>冬場は保温効果のある厚手タイプがおすすめ。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-header">
+                <h2 class="category-title">キッチン・調理家電</h2>
+            </div>
+            <div class="cards-container">
+                <div class="item-card urgent">
+                    <span class="item-name">冷蔵庫</span>
+                    <span class="timing">引越し当日に設置できれば理想</span>
+                    <div class="selection-points">一人暮らし向けの小型タイプ。<br>自炊するなら<span class="highlight">200L前後</span>、あまり料理しない場合は1ドアタイプも検討。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">電子レンジ</span>
+                    <span class="timing">入居後1週間以内に</span>
+                    <div class="selection-points">温め専用ならシンプルなモデル、調理機能付きならオーブン機能も。<br>キッチンの空間に合わせたサイズを選ぶ。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">炊飯器</span>
+                    <span class="timing">自炊するなら早めに用意</span>
+                    <div class="selection-points">一人暮らしには<span class="highlight">3合炊き程度</span>がおすすめ。<br>タイマー予約や保温機能付きで使い勝手の良いものを選ぼう。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">コンロ（ガスコンロ／IHコンロ）</span>
+                    <span class="timing">入居後、できるだけ早く</span>
+                    <div class="selection-points">一口または二口タイプ。<br>物件の設備に合わせ、ガスコンロかIHコンロを選択。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">食器・カトラリー</span>
+                    <span class="timing">入居後3日以内</span>
+                    <div class="selection-points">最低限の食器（茶碗、皿2-3枚）、箸・スプーン・フォーク、マグカップ、調理用の基本道具（フライパン、包丁、まな板）。</div>
+                </div>                                    
+                <div class="item-card later">
+                    <span class="item-name">電気ケトル</span>
+                    <span class="timing">必要に応じて<br>（入居後検討）</span>
+                                        <div class="selection-points">0.8～1L程度のコンパクトなモデル。<br>自動電源OFF機能付きなら安全性が高い。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-header">
+                <h2 class="category-title">生活家電・その他</h2>
+            </div>
+            <div class="cards-container">
+                <div class="item-card urgent">
+                    <span class="item-name">洗濯機</span>
+                    <span class="timing">入居時、もしくは入居後できるだけ早く</span>
+                    <div class="selection-points">一人暮らしなら<span class="highlight">5kg前後</span>の洗濯機がおすすめ。<br>設置場所（防水パン）のサイズや排水をチェック。</div>
+                </div>
+                <div class="item-card urgent">
+                    <span class="item-name">ドライヤー</span>
+                    <span class="timing">入居時</span>
+                    <div class="selection-points">シンプルなモデルでも十分。<br>速乾タイプやマイナスイオン機能付きなど、好みに合わせたものを選ぶ。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">掃除機</span>
+                    <span class="timing">入居後1週間以内に</span>
+                    <div class="selection-points">コンパクトなスティックタイプやハンディタイプがおすすめ。</div>
+                </div>
+                <div class="item-card soon">
+                    <span class="item-name">エアコン（冷暖房）</span>
+                    <span class="timing">夏冬前など、季節に合わせ早めに</span>
+                    <div class="selection-points">部屋の広さに合った能力のものを選択。<br>冷暖房兼用が一般的。設置工事が必要な場合は早めに手配しておこう。</div>
+                </div>
+                <div class="item-card later">
+                    <span class="item-name">テレビ</span>
+                    <span class="timing">必要性を感じた時点で</span>
+                    <div class="selection-points">20～32インチ程度の薄型モデル。<br>地デジ対応は必須。スマートTV機能搭載モデルも選択肢に。</div>
+                </div>
+                <div class="item-card later">
+                    <span class="item-name">アイロン・アイロン台（任意）</span>
+                    <span class="timing">仕事でワイシャツ等を着る人は早めに</span>
+                    <div class="selection-points">スチーム機能付きや折り畳み式のセット。<br>使用頻度が低ければ、ハンディタイプやシワ伸ばしスプレーで代用も可能。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="buying-guide">
+            <h3 style="color: #0061AE; border-bottom: 2px solid #0061AE; padding-bottom: 8px;">購入時期の優先度目安</h3>
+            <div style="display: flex; flex-wrap: wrap; margin-top: 15px; gap: 15px;">
+                <div style="flex: 1; min-width: 200px; background-color: rgba(255, 235, 235, 0.7); padding: 15px; border-radius: 8px; border-left: 4px solid #FF5252;">
+                    <h4 style="margin-top: 0; color: #FF5252;">最優先（入居時までに）</h4>
+                    <ul style="padding-left: 20px; margin-bottom: 0;">
+                        <li>ベッド・寝具</li>
+                        <li>カーテン</li>
+                        <li>照明器具</li>
+                        <li>テーブル・椅子</li>
+                        <li>冷蔵庫</li>
+                        <li>ドライヤー</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px; background-color: rgba(255, 248, 225, 0.7); padding: 15px; border-radius: 8px; border-left: 4px solid #FFC107;">
+                    <h4 style="margin-top: 0; color: #FF8F00;">早めに用意（1週間以内）</h4>
+                    <ul style="padding-left: 20px; margin-bottom: 0;">
+                        <li>収納家具</li>
+                        <li>電子レンジ</li>
+                        <li>炊飯器</li>
+                        <li>コンロ</li>
+                        <li>洗濯機</li>
+                        <li>掃除機</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px; background-color: rgba(240, 240, 240, 0.7); padding: 15px; border-radius: 8px; border-left: 4px solid #9E9E9E;">
+                    <h4 style="margin-top: 0; color: #616161;">順次購入（必要に応じて）</h4>
+                    <ul style="padding-left: 20px; margin-bottom: 0;">
+                        <li>ソファ</li>
+                        <li>ラグ・カーペット</li>
+                        <li>電気ケトル</li>
+                        <li>テレビ</li>
+                        <li>アイロン・アイロン台</li>
+                        <li>エアコン（季節に合わせて）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>このリストは一般的な一人暮らしを想定して作成しています。個人の生活スタイルやニーズ、予算に応じて適宜アレンジしてください。</p>
+            <p>© 2023 一人暮らし応援ガイド</p>
+        </footer>
+    </div>
+</body>
+</html>
+
