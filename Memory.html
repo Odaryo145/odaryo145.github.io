@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    <style>
+        <style>
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +16,7 @@
         
         :root {
             --primary-color: #0f0f0f;
-            --accent-color: #222222; /* 黒色 */
+            --accent-color: #222222;
             --light-accent: rgba(34, 34, 34, 0.1); 
             --text-color: #333;
             --light-text: #777;
@@ -27,7 +27,7 @@
         
         body {
             background-color: var(--bg-color);
-            font-family: 'Montserrat', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
@@ -70,6 +70,7 @@
         }
         
         .nav-link {
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 500;
             text-transform: uppercase;
@@ -93,164 +94,181 @@
             width: 100%;
         }
         
-        /* Main Content */
+        /* Detail Page Styles */
         .container {
             max-width: 1200px;
             margin: 120px auto 0;
             padding: 0 20px;
         }
         
-        /* タイトルと説明文の位置調整用のコンテナ */
-        .intro-content {
-            width: 600px;
-            margin: 0 auto;
-            text-align: left;
+        .gallery-header {
+            margin-bottom: 60px;
+            text-align: center;
         }
         
-        .intro {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-        
-        .intro h1 {
+        .date {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            margin-bottom: 60px; /* タイトルと説明文の間隔を広げる */
-            line-height: 1.2;
-            letter-spacing: 2px; /* 文字間隔を広くする */
-            text-transform: uppercase;
-            text-align: left;
-            width: 100%;
-        }
-        
-        /* 'M'を大きくするスタイル */
-        .big-letter {
-            font-size: 120px; 
-            display: inline-block;
-            line-height: 0.85;
-            font-weight: 800;
-            letter-spacing: 3px; 
-        }
-        
-        /* 'EMORY'を小さくして下揃えするスタイル */
-        .small-letters {
-            font-size: 32px; 
-            display: inline-block;
-            margin-left: 0; 
-            letter-spacing: 4px; 
-            position: relative;
-            bottom: 24px; 
-        }
-        
-        .title-highlight {
-            color: var(--accent-color);
-            position: relative;
-            display: flex; 
-            align-items: flex-end; 
-            height: 120px; 
-            margin-bottom: 6px; 
-        }
-        
-        .intro p {
-            color: var(--light-text);
             font-size: 16px;
-            text-align: center; 
-            width: 100%;
-            max-width: 600px; 
-            margin: 0 auto; 
-        }
-        
-        /* Gallery Layout - 設計変更 */
-        .gallery-container {
-            width: 100%;
-            margin: 0 auto;
-        }
-        
-        .gallery-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 100px;
-            transition: var(--transition);
-        }
-        
-        .gallery-item:hover {
-            transform: translateY(-10px);
-        }
-        
-        /* 写真と文字の組み合わせ */
-        .photo-with-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        
-        /* 左右のテキスト配置を修正 */
-        .side-text {
-            width: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* 垂直テキスト */
-        .vertical-text {
-            writing-mode: vertical-rl;
-            white-space: nowrap;
-            color: var(--accent-color);
-            font-weight: 500;
+            color: var(--light-text);
+            margin-bottom: 5px;
             letter-spacing: 1px;
-            font-size: 14px;
+        }
+        
+        .gallery-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
         
-        .left-text {
-            transform: rotate(180deg); /* 左側のテキストは回転 */
+        .gallery-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            font-size: 15px;
+            letter-spacing: 0.02em;
         }
         
-        /* 写真リンク */
-        .photo-link {
-            display: block;
-            width: 400px;
-            position: relative;
+        /* Photo Grid - 縦横写真に対応 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .grid-item {
             overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer; /* カーソルを追加して、クリック可能を示す */
         }
         
-        /* 写真 */
-        .photo {
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* 横向き写真は6カラム(半分)の幅 */
+        .landscape {
+            grid-column: span 6;
+        }
+        
+        /* 縦向き写真は4カラム(1/3)の幅 */
+        .portrait {
+            grid-column: span 4;
+        }
+        
+        .grid-item img {
             width: 100%;
-            aspect-ratio: 1 / 1; /* 正方形 */
-            object-fit: cover; /* 画像がきれいに収まるように */
+            height: 100%;
+            object-fit: cover;
             display: block;
             transition: var(--transition);
         }
         
-        .photo-link:hover .photo {
-            transform: scale(1.03); /* ホバー時に少し拡大 */
+        .grid-item:hover img {
+            transform: scale(1.03);
         }
         
-        /* オプション: ホバー時に表示するオーバーレイ */
-        .photo-link::after {
-            content: "View Gallery";
+        /* ライトボックス/モーダルスタイル */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-image {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        
+        .lightbox-nav {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 15px;
-            border-radius: 4px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
         }
         
-        .photo-link:hover::after {
-            opacity: 1;
+        .lightbox-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Back Button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 40px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .back-link:before {
+            content: '←';
+            margin-right: 8px;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
         }
         
         /* Footer */
@@ -269,6 +287,7 @@
         }
         
         .social-link {
+            font-family: 'Montserrat', sans-serif;
             font-size: 18px;
             transition: var(--transition);
         }
@@ -278,71 +297,45 @@
         }
         
         .copyright {
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
         }
         
         /* Responsive */
+        @media screen and (max-width: 992px) {
+            .landscape, .portrait {
+                grid-column: span 6;
+            }
+        }
+        
         @media screen and (max-width: 768px) {
             .header {
                 padding: 15px 20px;
             }
             
             .nav {
-                display: none; /* 簡易化のため、モバイルナビゲーションは省略 */
+                display: none;
             }
             
-            .intro-content {
-                width: 100%;
-                padding: 0 20px;
+            .gallery-title {
+                font-size: 28px;
             }
             
-            .big-letter {
-                font-size: 70px; /* モバイルでのM */
-                letter-spacing: 2px;
+            .photo-grid {
+                gap: 15px;
             }
             
-            .small-letters {
-                font-size: 24px; /* モバイルでのEMORY */
-                bottom: 15px; /* モバイルでの下揃え調整 */
-                letter-spacing: 2px;
-            }
-            
-            .title-highlight {
-                height: 70px;
-            }
-            
-            .photo-with-text {
-                flex-direction: column;
-            }
-            
-            .side-text {
-                width: 100%;
-                padding: 10px 0;
-            }
-            
-            .vertical-text {
-                writing-mode: horizontal-tb;
-                transform: none;
-            }
-            
-            .left-text {
-                transform: none;
-            }
-            
-            .photo-link {
-                width: 100%;
+            .landscape, .portrait {
+                grid-column: span 12;
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">VISUELLE<span>.</span></div>
+        <a href="../Memory.html" class="logo">VISUELLE<span>.</span></a>
         <nav class="nav">
-            <a href="#" class="nav-link">Home</a>
-            <a href="#" class="nav-link">Gallery</a>
-            <a href="#" class="nav-link">About</a>
-            <a href="#" class="nav-link">Contact</a>
+            <a href="../Mndex.html" class="nav-link">Home</a>
         </nav>
     </header>
     
