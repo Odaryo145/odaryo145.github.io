@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Moments - November 5, 2023 | VISUELLE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #0f0f0f;
+            --accent-color: #222222;
+            --light-accent: rgba(34, 34, 34, 0.1); 
+            --text-color: #333;
+            --light-text: #777;
+            --bg-color: #f8f8f8;
+            --white: #ffffff;
+            --transition: all 0.4s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(248, 248, 248, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        /* Detail Page Styles */
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 0 20px;
+        }
+        
+        .gallery-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .gallery-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            font-size: 15px;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Photo Grid - 縦横写真に対応 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .grid-item {
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer; /* カーソルを追加して、クリック可能を示す */
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* 横向き写真は6カラム(半分)の幅 */
+        .landscape {
+            grid-column: span 6;
+        }
+        
+        /* 縦向き写真は4カラム(1/3)の幅 */
+        .portrait {
+            grid-column: span 4;
+        }
+        
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .grid-item:hover img {
+            transform: scale(1.03);
+        }
+        
+        /* ライトボックス/モーダルスタイル */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-image {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Back Button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 40px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .back-link:before {
+            content: '←';
+            margin-right: 8px;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding: 50px 0;
+            text-align: center;
+            color: var(--light-text);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .social-link {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media screen and (max-width: 992px) {
+            .landscape, .portrait {
+                grid-column: span 6;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .nav {
+                display: none;
+            }
+            
+            .gallery-title {
+                font-size: 28px;
+            }
+            
+            .photo-grid {
+                gap: 15px;
+            }
+            
+            .landscape, .portrait {
+                grid-column: span 12;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../index.html" class="logo">VISUELLE<span>.</span></a>
+        <nav class="nav">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Gallery</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <a href="../index.html" class="back-link">Back to Memory</a>
+        
+        <section class="gallery-header">
+            <div class="date">March 20, 2025</div>
+            <h1 class="gallery-title">Crane Game</h1>
+            <p class="gallery-description">
+                伏見のラウワン。世間は春休み。忘れてた。だいぶ混んでた。<br>自分より年下の人ばっかり。
+            </p>
+        </section>
+        
+        <section class="photo-grid">
+            <!-- 横向き写真 - 画像パスを修正 -->
+            <div class="grid-item landscape">
+                <img src="233141_1.2.1.png" alt="Urban landscape scene at night">
+            </div>
+            <div class="grid-item landscape">
+                <img src="233141_1.1.2.png" alt="City lights in evening">
+            </div>
+            
+            <!-- 縦向き写真 - 画像パスを修正 -->
+            <div class="grid-item portrait">
+                <img src="105205_1.5.1.png" alt="Morning street view">
+            </div>
+            <div class="grid-item portrait">
+                <img src="105205_1.4.1.png" alt="Urban architecture detail">
+            </div>
+            <div class="grid-item portrait">
+                <img src="105205_1.3.1.png" alt="City perspective">
+            </div>
+        </section>
+    </main>
+    
+    <!-- ライトボックス/モーダル -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close">&times;</button>
+            <img src="" alt="" class="lightbox-image">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev">&lt;</button>
+                <button class="lightbox-next">&gt;</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="social-links">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">Facebook</a>
+            <a href="#" class="social-link">Twitter</a>
+            <a href="#" class="social-link">Behance</a>
+        </div>
+        <div class="copyright">
+            &copy; 2023 VISUELLE Photography. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // スクロールアニメーション
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            
+            if (window.scrollY > 50) {
+                header.style.padding = '15px 40px';
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+            } else {
+                header.style.padding = '20px 40px';
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // ライトボックス機能
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImage = document.querySelector('.lightbox-image');
+            const closeBtn = document.querySelector('.lightbox-close');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            const gridItems = document.querySelectorAll('.grid-item');
+            
+            let currentIndex = 0;
+            const images = [];
+            
+            // 画像の情報を配列に格納
+            gridItems.forEach((item, index) => {
+                const img = item.querySelector('img');
+                images.push({
+                    src: img.src,
+                    alt: img.alt
+                });
+                
+                // 画像クリックでライトボックスを開く
+                item.addEventListener('click', function() {
+                    currentIndex = index;
+                    openLightbox(currentIndex);
+                });
+            });
+            
+            // ライトボックスを開く関数
+            function openLightbox(index) {
+                lightboxImage.src = images[index].src;
+                lightboxImage.alt = images[index].alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // スクロール禁止
+            }
+            
+            // ライトボックスを閉じる関数
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = ''; // スクロール許可
+            }
+            
+            // 前の画像を表示
+            function showPrevImage() {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                lightboxImage.src = images[currentIndex].src;
+                lightboxImage.alt = images[currentIndex].alt;
+            }
+            
+            // 次の画像を表示
+            function showNextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                lightboxImage.src = images[currentIndex].src;
+                lightboxImage.alt = images[currentIndex].alt;
+            }
+            
+            // イベントリスナー
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            
+            // 背景クリックでも閉じる
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // キーボード操作
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
