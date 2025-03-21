@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VISUELLE ? Modern Photography</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #0f0f0f;
+            --accent-color: #222222; /* 黒色 */
+            --light-accent: rgba(34, 34, 34, 0.1); 
+            --text-color: #333;
+            --light-text: #777;
+            --bg-color: #f8f8f8;
+            --white: #ffffff;
+            --transition: all 0.4s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(248, 248, 248, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 0 20px;
+        }
+        
+        /* タイトルと説明文の位置調整用のコンテナ */
+        .intro-content {
+            width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 80px;
+            width: 100%;
+        }
+        
+        .intro h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 60px; /* タイトルと説明文の間隔を広げる */
+            line-height: 1.2;
+            letter-spacing: 2px; /* 文字間隔を広くする */
+            text-transform: uppercase;
+            text-align: left;
+            width: 100%;
+        }
+        
+        /* 'M'を大きくするスタイル */
+        .big-letter {
+            font-size: 120px; 
+            display: inline-block;
+            line-height: 0.85;
+            font-weight: 800;
+            letter-spacing: 3px; 
+        }
+        
+        /* 'EMORY'を小さくして下揃えするスタイル */
+        .small-letters {
+            font-size: 32px; 
+            display: inline-block;
+            margin-left: 0; 
+            letter-spacing: 4px; 
+            position: relative;
+            bottom: 24px; 
+        }
+        
+        .title-highlight {
+            color: var(--accent-color);
+            position: relative;
+            display: flex; 
+            align-items: flex-end; 
+            height: 120px; 
+            margin-bottom: 6px; 
+        }
+        
+        .intro p {
+            color: var(--light-text);
+            font-size: 16px;
+            text-align: center; 
+            width: 100%;
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        
+        /* Gallery Layout - 設計変更 */
+        .gallery-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 100px;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* 写真と文字の組み合わせ */
+        .photo-with-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        /* 左右のテキスト配置を修正 */
+        .side-text {
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 垂直テキスト */
+        .vertical-text {
+            writing-mode: vertical-rl;
+            white-space: nowrap;
+            color: var(--accent-color);
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        .left-text {
+            transform: rotate(180deg); /* 左側のテキストは回転 */
+        }
+        
+        /* 写真リンク */
+        .photo-link {
+            display: block;
+            width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 写真 */
+        .photo {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* 正方形 */
+            object-fit: cover; /* 画像がきれいに収まるように */
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .photo-link:hover .photo {
+            transform: scale(1.03); /* ホバー時に少し拡大 */
+        }
+        
+        /* オプション: ホバー時に表示するオーバーレイ */
+        .photo-link::after {
+            content: "View Gallery";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 15px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .photo-link:hover::after {
+            opacity: 1;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding: 50px 0;
+            text-align: center;
+            color: var(--light-text);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .social-link {
+            font-size: 18px;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .nav {
+                display: none; /* 簡易化のため、モバイルナビゲーションは省略 */
+            }
+            
+            .intro-content {
+                width: 100%;
+                padding: 0 20px;
+            }
+            
+            .big-letter {
+                font-size: 70px; /* モバイルでのM */
+                letter-spacing: 2px;
+            }
+            
+            .small-letters {
+                font-size: 24px; /* モバイルでのEMORY */
+                bottom: 15px; /* モバイルでの下揃え調整 */
+                letter-spacing: 2px;
+            }
+            
+            .title-highlight {
+                height: 70px;
+            }
+            
+            .photo-with-text {
+                flex-direction: column;
+            }
+            
+            .side-text {
+                width: 100%;
+                padding: 10px 0;
+            }
+            
+            .vertical-text {
+                writing-mode: horizontal-tb;
+                transform: none;
+            }
+            
+            .left-text {
+                transform: none;
+            }
+            
+            .photo-link {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">VISUELLE<span>.</span></div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Gallery</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <section class="intro">
+            <div class="intro-content">
+                <h1><span class="title-highlight"><span class="big-letter">M</span><span class="small-letters">EMORY</span></span></h1>
+                <p>This site is a place for preserving the creator's records, thoughts, and memories. It's a space intended to leave data behind for the future.</p>
+            </div>
+        </section>
+        
+        <section class="gallery-container">
+            <article class="gallery-item">
+                <!-- 1枚目の写真 -->
+                <div class="photo-with-text">
+                    <div class="side-text">
+                        <div class="vertical-text left-text">Crane Game</div>
+                    </div>
+                    <a href="2025-03-20.html" class="photo-link">
+                        <img src="233141_1.1.2.png" alt="スポッチャ" class="photo">
+                    </a>
+                    <div class="side-text">
+                        <div class="vertical-text">2025-03-20</div>
+                    </div>
+                </div>
+                
+                <!-- 2枚目の写真 -->
+                <div class="photo-with-text">
+                    <div class="side-text">
+                        <div class="vertical-text left-text">City View</div>
+                    </div>
+                    <a href="dates/2025-03-02.html" class="photo-link">
+                        <img src="122530_1.10.1.png" alt="大六丸" class="photo">
+                    </a>
+                    <div class="side-text">
+                        <div class="vertical-text">March 2025</div>
+                    </div>
+                </div>
+                
+                <!-- 3枚目の写真 -->
+                <div class="photo-with-text">
+                    <div class="side-text">
+                        <div class="vertical-text left-text">Lake</div>
+                    </div>
+                    <a href="dates/2022-07-02.html" class="photo-link">
+                        <img src="DSCF0497.jpg" alt="Portrait" class="photo">
+                    </a>
+                    <div class="side-text">
+                        <div class="vertical-text">July 2022</div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="social-links">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">Facebook</a>
+            <a href="#" class="social-link">Twitter</a>
+            <a href="#" class="social-link">Behance</a>
+        </div>
+        <div class="copyright">
+            &copy; 2023 VISUELLE Photography. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // スクロールアニメーション
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            
+            if (window.scrollY > 50) {
+                header.style.padding = '15px 40px';
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+            } else {
+                header.style.padding = '20px 40px';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
